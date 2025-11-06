@@ -78,10 +78,10 @@ window.onload = function() {
     }
 
     topPipeImg = new Image();
-    topPipeImg.src = "diluc_pillar.png";
+    topPipeImg.src = "./diluc_pillar.png";
 
     bottomPipeImg = new Image();
-    bottomPipeImg.src = "diluc_pillar.png";
+    bottomPipeImg.src = "./diluc_pillar.png";
 
     youLostImg = new Image();
     youLostImg.src = "./you_lost.png";
@@ -113,11 +113,11 @@ window.onload = function() {
     }
 
     // Load background music and die sound
-    bgMusic = new Audio("./bg_sound.wav");
+    bgMusic = new Audio("./bg_sound.mp3");
     bgMusic.loop = true; // Enable looping
     bgMusic.volume = 0.3; // Set volume to 30%
 
-    dieSound = new Audio("./die_sound.wav");
+    dieSound = new Audio("./die_sound.mp3");
     dieSound.loop = true; // Loop the meme song
     dieSound.volume = 0.4; // Set volume to 40%
 }
@@ -393,3 +393,4 @@ function detectCollision(a, b) {
            a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
 
 }
+

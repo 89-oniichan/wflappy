@@ -78,10 +78,10 @@ window.onload = function() {
     }
 
     topPipeImg = new Image();
-    topPipeImg.src = "./diluc_pillar.png";
+    topPipeImg.src = "diluc_pillar.png";
 
     bottomPipeImg = new Image();
-    bottomPipeImg.src = "./diluc_pillar.png";
+    bottomPipeImg.src = "diluc_pillar.png";
 
     youLostImg = new Image();
     youLostImg.src = "./you_lost.png";
@@ -391,4 +391,5 @@ function detectCollision(a, b) {
            a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
            a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
            a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
+
 }

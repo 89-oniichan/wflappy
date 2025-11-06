@@ -420,7 +420,7 @@ function moveBird(e) {
     }
 
     //jump (reduced for easier control)
-    velocityY = -4.5;
+    velocityY = -4.0;
 
     // Play jump sound
     playJumpSound();
@@ -432,3 +432,4 @@ function detectCollision(a, b) {
            a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
            a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
 }
+

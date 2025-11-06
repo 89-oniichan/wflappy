@@ -59,6 +59,7 @@ let audioContext;
 let soundEnabled = true;
 let bgMusic;
 let dieSound;
+let audioLoaded = false; // Track if audio is loaded
 
 window.onload = function() {
     board = document.getElementById("board");
@@ -118,13 +119,31 @@ window.onload = function() {
     bgMusic.loop = true; // Enable looping
     bgMusic.volume = 0.3; // Set volume to 30%
     bgMusic.preload = "auto"; // Preload the audio
-    bgMusic.load(); // Force load immediately
 
     dieSound = new Audio("./die_sound.mp3");
     dieSound.loop = true; // Loop the meme song
     dieSound.volume = 0.4; // Set volume to 40%
     dieSound.preload = "auto"; // Preload the audio
-    dieSound.load(); // Force load immediately
+
+    // Wait for both audio files to load
+    let bgMusicLoaded = false;
+    let dieSoundLoaded = false;
+
+    bgMusic.addEventListener('canplaythrough', function() {
+        bgMusicLoaded = true;
+        if (dieSoundLoaded) audioLoaded = true;
+        console.log("Background music loaded");
+    });
+
+    dieSound.addEventListener('canplaythrough', function() {
+        dieSoundLoaded = true;
+        if (bgMusicLoaded) audioLoaded = true;
+        console.log("Die sound loaded");
+    });
+
+    // Force load immediately
+    bgMusic.load();
+    dieSound.load();
 }
 
 // Sound effect functions
@@ -310,6 +329,13 @@ function update() {
         context.fillStyle = "white";
         context.font="25px sans-serif";
         context.fillText("Press Space/Click to Start", boardWidth/2 - 140, boardHeight/2);
+
+        // Show loading indicator if audio not loaded
+        if (!audioLoaded) {
+            context.fillStyle = "#ffaa00";
+            context.font="18px sans-serif";
+            context.fillText("Loading audio...", boardWidth/2 - 70, boardHeight/2 + 40);
+        }
     }
 }
 
@@ -359,9 +385,18 @@ function moveBird(e) {
     if (!gameStarted && !gameOver) {
         gameStarted = true;
 
-        // Start background music when game starts
+        // Start background music when game starts - only if loaded
         if (bgMusic && bgMusic.paused) {
-            bgMusic.play().catch(e => console.log("Background music play failed:", e));
+            // Check if audio is ready
+            if (bgMusic.readyState >= 3) { // HAVE_FUTURE_DATA or HAVE_ENOUGH_DATA
+                bgMusic.play().catch(e => console.log("Background music play failed:", e));
+            } else {
+                // Wait for it to be ready, then play
+                console.log("Waiting for background music to load...");
+                bgMusic.addEventListener('canplay', function() {
+                    bgMusic.play().catch(e => console.log("Background music play failed:", e));
+                }, { once: true });
+            }
         }
     }
 

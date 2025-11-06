@@ -113,13 +113,18 @@ window.onload = function() {
     }
 
     // Load background music and die sound
+    // Note: Using MP3 for smaller file sizes (GitHub Pages friendly)
     bgMusic = new Audio("./bg_sound.mp3");
     bgMusic.loop = true; // Enable looping
     bgMusic.volume = 0.3; // Set volume to 30%
+    bgMusic.preload = "auto"; // Preload the audio
+    bgMusic.load(); // Force load immediately
 
     dieSound = new Audio("./die_sound.mp3");
     dieSound.loop = true; // Loop the meme song
     dieSound.volume = 0.4; // Set volume to 40%
+    dieSound.preload = "auto"; // Preload the audio
+    dieSound.load(); // Force load immediately
 }
 
 // Sound effect functions
@@ -391,6 +396,4 @@ function detectCollision(a, b) {
            a.x + a.width > b.x &&   //a's top right corner passes b's top left corner
            a.y < b.y + b.height &&  //a's top left corner doesn't reach b's bottom left corner
            a.y + a.height > b.y;    //a's bottom left corner passes b's top left corner
-
 }
-
